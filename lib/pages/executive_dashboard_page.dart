@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:fl_chart/fl_chart.dart';
 import '../models/dashboard_data.dart';
 import '../providers/app_data_provider.dart';
+import 'recurring_issue_detail_page.dart';
 
 class ExecutiveDashboardPage extends StatelessWidget {
   const ExecutiveDashboardPage({super.key});
@@ -538,102 +539,125 @@ class ExecutiveDashboardPage extends StatelessWidget {
         final index = entry.key;
         final issue = entry.value;
         
-        return Container(
-          margin: const EdgeInsets.only(bottom: 12),
-          padding: const EdgeInsets.all(16),
-          decoration: BoxDecoration(
-            color: Colors.orange[50],
-            borderRadius: BorderRadius.circular(12),
-            border: Border.all(color: Colors.orange[200]!, width: 1),
-          ),
-          child: Row(
-            children: [
-              // 排名
-              Container(
-                width: 40,
-                height: 40,
-                decoration: BoxDecoration(
-                  color: index < 3 ? Colors.red[700] : Colors.orange,
-                  shape: BoxShape.circle,
-                ),
-                child: Center(
-                  child: Text(
-                    '${index + 1}',
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
+        return Builder(
+          builder: (context) {
+            return GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => RecurringIssueDetailPage(issue: issue),
                   ),
+                );
+              },
+              child: Container(
+                margin: const EdgeInsets.only(bottom: 12),
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: Colors.orange[50],
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(color: Colors.orange[200]!, width: 1),
                 ),
-              ),
-              const SizedBox(width: 16),
-              
-              // 問題資訊
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                child: Row(
                   children: [
-                    Text(
-                      issue.issueTitle,
-                      style: const TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
+                    // 排名
+                    Container(
+                      width: 40,
+                      height: 40,
+                      decoration: BoxDecoration(
+                        color: index < 3 ? Colors.red[700] : Colors.orange,
+                        shape: BoxShape.circle,
                       ),
-                    ),
-                    const SizedBox(height: 4),
-                    Row(
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
-                          decoration: BoxDecoration(
-                            color: Colors.grey[300],
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: Text(
-                            issue.category,
-                            style: TextStyle(
-                              fontSize: 11,
-                              color: Colors.grey[800],
-                            ),
+                      child: Center(
+                        child: Text(
+                          '${index + 1}',
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
-                        const SizedBox(width: 8),
+                      ),
+                    ),
+                    const SizedBox(width: 16),
+                    
+                    // 問題資訊
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            issue.issueTitle,
+                            style: const TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          const SizedBox(height: 4),
+                          Row(
+                            children: [
+                              Container(
+                                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                                decoration: BoxDecoration(
+                                  color: Colors.grey[300],
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                                child: Text(
+                                  issue.category,
+                                  style: TextStyle(
+                                    fontSize: 11,
+                                    color: Colors.grey[800],
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(width: 8),
+                              Text(
+                                '最近發生: ${_formatTime(issue.lastOccurrence)}',
+                                style: TextStyle(
+                                  fontSize: 11,
+                                  color: Colors.grey[600],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                    
+                    // 發生次數
+                    Column(
+                      children: [
                         Text(
-                          '最近發生: ${_formatTime(issue.lastOccurrence)}',
+                          '${issue.occurrences}',
                           style: TextStyle(
-                            fontSize: 11,
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.red[700],
+                          ),
+                        ),
+                        Text(
+                          '次',
+                          style: TextStyle(
+                            fontSize: 12,
                             color: Colors.grey[600],
                           ),
                         ),
                       ],
                     ),
+                    
+                    const SizedBox(width: 8),
+                    
+                    // 箭頭指示
+                    Icon(
+                      Icons.arrow_forward_ios,
+                      size: 16,
+                      color: Colors.grey[400],
+                    ),
                   ],
                 ),
               ),
-              
-              // 發生次數
-              Column(
-                children: [
-                  Text(
-                    '${issue.occurrences}',
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.red[700],
-                    ),
-                  ),
-                  Text(
-                    '次',
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: Colors.grey[600],
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
+            );
+          },
         );
       }).toList(),
     );

@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 import 'providers/app_data_provider.dart';
 import 'pages/employee_tasks_page.dart';
 import 'pages/manager_exception_page.dart';
-import 'pages/executive_dashboard_page.dart';
 import 'pages/knowledge_wall_page.dart';
 import 'pages/headquarters_department_page.dart';
 import 'pages/chat_list_page.dart';
@@ -57,7 +56,6 @@ class _MainNavigationPageState extends State<MainNavigationPage> {
     const RoleSelectionPage(),
     const EmployeeTasksPage(),
     const ManagerExceptionPage(),
-    const ExecutiveDashboardPage(),
     const HeadquartersDepartmentPage(),
     const ChatListPage(),
     const KnowledgeWallPage(),
@@ -102,11 +100,6 @@ class _MainNavigationPageState extends State<MainNavigationPage> {
             label: '店長端',
           ),
           const NavigationDestination(
-            icon: Icon(Icons.dashboard_outlined),
-            selectedIcon: Icon(Icons.dashboard),
-            label: '老闆端',
-          ),
-          const NavigationDestination(
             icon: Icon(Icons.business_center_outlined),
             selectedIcon: Icon(Icons.business_center),
             label: '總部',
@@ -137,7 +130,7 @@ class _MainNavigationPageState extends State<MainNavigationPage> {
           const NavigationDestination(
             icon: Icon(Icons.school_outlined),
             selectedIcon: Icon(Icons.school),
-            label: '人資端',
+            label: '知識庫',
           ),
         ],
       ),
@@ -167,22 +160,22 @@ class RoleSelectionPage extends StatelessWidget {
                       // Logo 和標題
                       Center(
                         child: Container(
-                          width: 80,
-                          height: 80,
+                          width: 60,
+                          height: 60,
                           decoration: BoxDecoration(
                             color: Colors.white,
-                            borderRadius: BorderRadius.circular(20),
+                            borderRadius: BorderRadius.circular(16),
                             boxShadow: [
                               BoxShadow(
                                 color: Colors.black.withValues(alpha: 0.1),
-                                blurRadius: 10,
-                                offset: const Offset(0, 4),
+                                blurRadius: 8,
+                                offset: const Offset(0, 3),
                               ),
                             ],
                           ),
                           child: const Icon(
                             Icons.restaurant_menu,
-                            size: 48,
+                            size: 36,
                             color: Color(0xFF1976D2),
                           ),
                         ),
@@ -249,22 +242,12 @@ class RoleSelectionPage extends StatelessWidget {
                       
                       _buildRoleCard(
                         context,
-                        '老闆/高層端',
-                        '營運監控儀表板',
-                        '掌握各門市績效,數據可視化管理決策',
-                        Icons.dashboard,
-                        Colors.purple,
-                        3,
-                      ),
-                      
-                      _buildRoleCard(
-                        context,
-                        '總部部門監控',
-                        '各部門績效與門市關聯',
-                        '監控各部門表現,從門市數據看部門效能',
+                        '總部/高層端',
+                        '部門績效與營運監控',
+                        '監控部門與門市表現,數據可視化管理決策',
                         Icons.business_center,
                         Colors.indigo,
-                        4,
+                        3,
                       ),
                       
                       _buildRoleCard(
@@ -274,17 +257,17 @@ class RoleSelectionPage extends StatelessWidget {
                         '主管主動回饋,任務交辦,跨角色即時溝通',
                         Icons.chat,
                         Colors.teal,
-                        5,
+                        4,
                       ),
                       
                       _buildRoleCard(
                         context,
-                        '人資/訓練端',
+                        '知識庫',
                         '知識傳承公告牆',
                         '新人自主學習,取代傳統口頭教導',
                         Icons.school,
                         Colors.green,
-                        6,
+                        5,
                       ),
                       
                       const SizedBox(height: 32),

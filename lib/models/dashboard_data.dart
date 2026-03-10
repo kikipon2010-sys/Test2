@@ -20,17 +20,33 @@ class StorePerformance {
   bool isPerformanceLow() => taskCompletionRate < 0.8;
 }
 
+class IssueOccurrence {
+  final String storeId;
+  final String storeName;
+  final DateTime occurredAt;
+  final String description;
+  
+  IssueOccurrence({
+    required this.storeId,
+    required this.storeName,
+    required this.occurredAt,
+    required this.description,
+  });
+}
+
 class RecurringIssue {
   final String issueTitle;
   final int occurrences;
   final String category;
   final DateTime lastOccurrence;
+  final List<IssueOccurrence> details;
   
   RecurringIssue({
     required this.issueTitle,
     required this.occurrences,
     required this.category,
     required this.lastOccurrence,
+    this.details = const [],
   });
 }
 
